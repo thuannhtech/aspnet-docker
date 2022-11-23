@@ -18,4 +18,4 @@ jobs:
           RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
         run: echo $RELEASE_VERSION
       - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag asp-net-docker:${{ steps.meta.outputs.tags }}
+        run: docker build . --file Dockerfile --tag asp-net-docker:$RELEASE_VERSION
