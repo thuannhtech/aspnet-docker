@@ -15,3 +15,5 @@ jobs:
     - name: Check output
       env:
        RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag asp-net-docker:${{ steps.meta.outputs.tags }}
