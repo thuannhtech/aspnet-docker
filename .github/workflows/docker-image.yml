@@ -9,7 +9,9 @@ jobs:
     runs-on: self-hosted
     steps:
     - uses: actions/checkout@v3
-    - name: Use tag
-      run: echo ${{ steps.meta.outputs.tags }}
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag asp-net-docker:${{ steps.meta.outputs.tags }}
+    - name: Set output
+      id: vars
+      run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+    - name: Check output
+      env:
+       RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
