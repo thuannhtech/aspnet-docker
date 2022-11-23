@@ -2,18 +2,22 @@ name: Docker Image CI
 
 on:
   push:
-    tags:        
-      - '*' 
+    tags:
+      - "*"
+
 jobs:
   build:
     runs-on: self-hosted
     steps:
-    - uses: actions/checkout@v3
-    - name: Set output
-      id: vars
-      run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
-    - name: Check output
-      env:
-       RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag asp-net-docker:${{ steps.meta.outputs.tags }}
+      - uses: actions/checkout@v3
+      - name: Set output
+        id: vars
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+      - name: Check output
+        env:
+          RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
+        run: |
+          echo $RELEASE_VERSION
+          echo ${{ steps.vars.outputs.tag }}
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag asp-net-docker:${{ steps.meta.outputs.tags }}
